@@ -47,10 +47,5 @@ def counter(exercitiu):
                     app=z
         print(f'Cele mai multe rulari cu succes au fost in aplicatia {app},adica {nrm} rulari')
 
-    else:
-     for z,x in info.items():
-        print(f'Pentru {z} avem cifrele:')
-        for y in x.items():
-            print(y)
 
 counter(5)
