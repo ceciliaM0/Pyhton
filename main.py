@@ -1,5 +1,5 @@
-def read_log_file():
-    file = open("C:\\Users\\EBOLOTTI5\\Downloads\\output.txt", mode='r')
+def read_log_file(path):
+    file = open(path, mode='r')
     info = {'BackendApp': {'ERROR': 0, 'DEBUG': 0, 'INFO': 0},
             'FrontendApp': {'ERROR': 0, 'DEBUG': 0, 'INFO': 0},
             'API': {'ERROR': 0, 'DEBUG': 0, 'INFO': 0},
@@ -17,9 +17,7 @@ def read_log_file():
     file.close()
     return info
 
-info = read_log_file()
-
-def ex1():
+def ex1(info):
     for app, logs in info.items():
         if app != 'SYSTEM':
             print(f'Pentru {app} avem cifrele:')
@@ -27,7 +25,7 @@ def ex1():
                 print(log_type, count)
     return info
 
-def ex3():
+def ex3(info):
     rez={}
     for app, logs in info.items():
         for log_type, count in logs.items():
@@ -36,7 +34,7 @@ def ex3():
                 rez[app]=count
     return rez
 
-def ex4():
+def ex4(info):
     max_errors = 0
     app_with_errors = ''
     for app, logs in info.items():
@@ -48,7 +46,7 @@ def ex4():
     tr=(app_with_errors,max_errors)
     return tr
 
-def ex5():
+def ex5(info):
     max_info_count = 0
     app_with_max_info = ''
     for app, logs in info.items():
