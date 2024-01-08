@@ -21,13 +21,13 @@ def read_log_file():
     return info
 
 
-def ex1():
-    info = read_log_file()
+def ex1(info):
     for app, logs in info.items():
         if app != 'SYSTEM':
             print(f'Pentru {app} avem cifrele:')
             for log_type, count in logs.items():
                 print(log_type, count)
+    return info
 
 def ex2():
     app_runtimes = defaultdict(lambda: {'total_runtime': 0, 'count': 0})
@@ -52,15 +52,16 @@ def ex2():
             print(f"Average successful runtime for {app_type}: {average_runtime:.2f} ms")
 
 
-def ex3():
-    info = read_log_file()
+def ex3(info):
+    rez={}
     for app, logs in info.items():
         for log_type, count in logs.items():
             if log_type == 'ERROR':
                 print(f'Aplicatia {app} a avut {count} erori')
+                rez[app]=count
+    return rez
 
-def ex4():
-    info = read_log_file()
+def ex4(info):
     max_errors = 0
     app_with_errors = ''
     for app, logs in info.items():
@@ -69,9 +70,10 @@ def ex4():
                 max_errors = count
                 app_with_errors = app
     print(f'Cele mai multe erori au fost în aplicatia {app_with_errors}, adică {max_errors} erori')
+    tr=(app_with_errors,max_errors)
+    return tr
 
-def ex5():
-    info = read_log_file()
+def ex5(info):
     max_info_count = 0
     app_with_max_info = ''
     for app, logs in info.items():
@@ -80,6 +82,7 @@ def ex5():
                 max_info_count = count
                 app_with_max_info = app
     print(f'Cele mai multe rulări cu succes au fost în aplicatia {app_with_max_info}, adică {max_info_count} rulări cu succes')
+    return (app_with_max_info,max_info_count)
 
 def ex6():
     errors_by_interval = {'morning': 0, 'afternoon': 0, 'evening': 0}
