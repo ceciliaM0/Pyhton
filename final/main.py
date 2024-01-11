@@ -115,30 +115,29 @@ def ex6():
     print(f"The part of the day with the most errors: {max_interval}")
 
 def ex7():
-    longest_runtime = {'time': None, 'value': float('-inf')}
-    shortest_runtime = {'time': None, 'value': float('inf')}
+    app_runtimes = defaultdict(lambda: {'longest': {'time': None, 'value': float('-inf')},
+                                         'shortest': {'time': None, 'value': float('inf')}})
 
     log_pattern = re.compile(r'^(\d{2}:\d{2}:\d{2}) - \[INFO\] - (\w+) has ran successfully in (\d+)ms.*$')
 
-    with open("C:\\Users\\EMUSTECJN\\Downloads\\output.txt", 'r') as file:
-        lines = file.readlines()
+    with open("output.txt", 'r') as file:
+        for line in file:
+            match = log_pattern.match(line)
+            if match:
+                timestamp, app_type, runtime_str = match.groups()
+                runtime = int(runtime_str)
 
-    for line in lines:
-        match = log_pattern.match(line)
-        if match:
-            timestamp, app_type, runtime_str = match.groups()
-            runtime = int(runtime_str)
+                if runtime > app_runtimes[app_type]['longest']['value']:
+                    app_runtimes[app_type]['longest'] = {'time': timestamp, 'value': runtime}
 
-            if runtime > longest_runtime['value']:
-                longest_runtime['time'] = timestamp
-                longest_runtime['value'] = runtime
+                if runtime < app_runtimes[app_type]['shortest']['value']:
+                    app_runtimes[app_type]['shortest'] = {'time': timestamp, 'value': runtime}
 
-            if runtime < shortest_runtime['value']:
-                shortest_runtime['time'] = timestamp
-                shortest_runtime['value'] = runtime
+    for app_type, runtimes in app_runtimes.items():
+        print(f"{app_type} - Longest successful run time: {runtimes['longest']['value']} ms at timestamp {runtimes['longest']['time']}")
+        print(f"{app_type} - Shortest successful run time: {runtimes['shortest']['value']} ms at timestamp {runtimes['shortest']['time']}")
+        print()
 
-    print(f"Longest successful run time: {longest_runtime['value']} ms at timestamp {longest_runtime['time']}")
-    print(f"Shortest successful run time: {shortest_runtime['value']} ms at timestamp {shortest_runtime['time']}")
 
 def ex8(file_path):
     hourly_activity = {}
