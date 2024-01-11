@@ -140,10 +140,11 @@ def ex7():
     print(f"Longest successful run time: {longest_runtime['value']} ms at timestamp {longest_runtime['time']}")
     print(f"Shortest successful run time: {shortest_runtime['value']} ms at timestamp {shortest_runtime['time']}")
 
-def ex8():
+def ex8(file_path):
     hourly_activity = {}
+    results = []  # Lista pentru a stoca rezultatele
 
-    with open("C:\\Users\\EMUSTECJN\\Downloads\\output.txt", 'r') as file:
+    with open(file_path, 'r') as file:
         logs = file.readlines()
 
     for log in logs:
@@ -172,13 +173,17 @@ def ex8():
                 max_activities[app_type] = (hour, count)
 
     for app_type, (hour, count) in max_activities.items():
-        print(f"{app_type} had the most activities at hour {hour} with a total of {count} activities")
+        result = f"{app_type} had the most activities at hour {hour} with a total of {count} activities"
+        results.append(result)  
+        print(result)  
+
+    return results
 
 
-def ex9():
+def ex9(file_path):
     app_logs = {}
 
-    with open("C:\\Users\\EMUSTECJN\\Downloads\\output.txt", 'r') as file:
+    with open(file_path, 'r') as file:
         logs = file.readlines()
 
     for log in logs:
@@ -194,12 +199,16 @@ def ex9():
         if activity_type == 'ERROR':
             app_logs[app_type]['ERROR'] += 1
 
+    results = []
     for app_type, counts in app_logs.items():
         error_count = counts['ERROR']
         total_count = counts['TOTAL']
 
         failure_rate = (error_count / total_count) * 100 if total_count != 0 else 0
-        print(f"Failure rate for {app_type}: {failure_rate:.2f}%")
+        results.append(f"Failure rate for {app_type}: {failure_rate:.2f}%")
+        
+    print(results)
+    return results
 
 if __name__ == "__main__":
     ex8()
